@@ -1,19 +1,14 @@
-FROM debian:stretch
+FROM ubuntu:16.04
 
-RUN sed -i "s/stretch main/stretch main contrib non-free/" /etc/apt/sources.list
-RUN echo "deb http://www.deb-multimedia.org stretch main non-free" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y --force-yes deb-multimedia-keyring mosquitto-clients
-RUN apt-get update
-
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     libavutil-dev \
     libavformat-dev \
     libavcodec-dev \
     libswscale-dev \
     libavdevice-dev \
     libjpeg-dev \
-    ffmpeg
+    ffmpeg \
+    mosquitto-clients
 
 WORKDIR /
 COPY build_motion.sh /build_motion.sh
