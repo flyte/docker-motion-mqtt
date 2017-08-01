@@ -1,5 +1,6 @@
 FROM jnewland/motion
 
+RUN apt-get update
 RUN apt-get install -y mosquitto-clients
 RUN apt-get clean
 
