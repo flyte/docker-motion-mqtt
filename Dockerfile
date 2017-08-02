@@ -8,9 +8,10 @@ RUN apt-get update && apt-get install -y \
     libavdevice-dev \
     libjpeg-dev \
     ffmpeg \
-    mosquitto-clients
+    mosquitto-clients && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /
 COPY build_motion.sh /build_motion.sh
 RUN /build_motion.sh
 
@@ -18,5 +19,5 @@ EXPOSE 8080
 EXPOSE 8081
 
 VOLUME /etc/motion
-ENTRYPOINT ["/motion/motion"]
+ENTRYPOINT ["/usr/local/bin/motion"]
 CMD ["-c", "/etc/motion/motion.conf"]

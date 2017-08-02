@@ -2,6 +2,7 @@
 
 set -ex
 
+apt-get update
 apt-get install -y \
     autoconf \
     curl \
@@ -15,13 +16,16 @@ apt-get install -y \
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
-git clone https://github.com/Motion-Project/motion.git
+cd /tmp
+git clone --depth 1 https://github.com/Motion-Project/motion.git
 cd motion
 
 autoreconf -fiv
-./configure
+./configure --prefix /usr/local
 make
 make install
+cd /
+rm -rf /tmp/motion
 
 apt-get purge -y \
     autoconf \
@@ -35,3 +39,4 @@ apt-get purge -y \
 
 apt-get autoremove --purge -y
 apt-get clean
+rm -rf /var/lib/apt/lists/*
