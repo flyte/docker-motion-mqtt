@@ -15,9 +15,11 @@ RUN apt-get update && apt-get install -y \
 COPY build_motion.sh /build_motion.sh
 RUN /build_motion.sh
 
+COPY run_motion.sh /run_motion.sh
+
 EXPOSE 8080
 EXPOSE 8081
 
-VOLUME /etc/motion
-ENTRYPOINT ["/usr/local/bin/motion"]
-CMD ["-c", "/etc/motion/motion.conf"]
+VOLUME /motion
+ENTRYPOINT ["/run_motion.sh"]
+CMD ["-c", "/motion/motion.conf"]
